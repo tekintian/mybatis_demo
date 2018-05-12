@@ -19,9 +19,9 @@ import java.util.Map;
 public class UserTest {
     //把测试用到的对象先在这里声明了，减少冗余代码
     // SqlSession最佳应用场合在方法体内，定义成局部变量使用, 此处仅为介绍冗余代码而用，因为每次测试 Junit都会关闭或者开启 SqlSession
-    InputStream inputStream=null;
-    SqlSessionFactory sqlSessionFactory=null;
-    SqlSession sqlSession=null;
+    private InputStream inputStream=null;
+    private SqlSessionFactory sqlSessionFactory=null;
+    private SqlSession sqlSession=null;
 
     //java sqldate 获取; 直接使用 java.util.Date() 获取会报错【Cannot resolve constructor 'Date()'】
     java.sql.Date sqlDate=new java.sql.Date(new Date().getTime());

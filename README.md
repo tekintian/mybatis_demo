@@ -1,17 +1,38 @@
-# Mybatis Demo v0.2.0
+# Mybatis Demo v0.3.0
 
 ---
 
-# 原始dao开发 
+# Mybatis之mapper代理方法
 
-## 原始dao开发存在的问题
 
-    1.dao接口实现类方法中存在大量模板方法，设想能否将这些代码提取出来，大大减轻程序员的工作量。
-    
-    2.调用sqlsession方法时将statement的id硬编码了
-    
-    3.调用sqlsession方法时传入的变量，由于sqlsession方法使用泛型，即使变量类型传入错误，在编译阶段也不报错，不利于程序员开发。
-    
+##开发规范
+  在mapper.xml中namespace等于mapper接口地址【 java 接口文件命名规范 xxxImpl】
+  <!--
+   namespace 命名空间，作用就是对sql进行分类化管理,理解为sql隔离
+   注意：使用mapper代理方法开发，namespace有特殊重要的作用,namespace等于mapper接口地址
+   -->
+   
+  <mapper namespace="cn.tekin.mybatis.mapper.UserMapperImpl">
+  
+  mapper.java接口中的方法名和mapper.xml中statement的id一致
+  
+  mapper.java接口中的方法输入参数类型和mapper.xml中statement的parameterType指定的类型一致。
+  
+  mapper.java接口中的方法返回值类型和mapper.xml中statement的resultType指定的类型一致。
+  
+  <select id="findUserById" parameterType="int" resultType="cn.tekin.mybatis.po.User">
+      SELECT * FROM  user  WHERE id=#{value}
+  </select>
+  //根据id查询用户信息
+  public User findUserById(int id) throws Exception;
+  总结：以上开发规范主要是对下边的代码进行统一生成：
+  
+  User user = sqlSession.selectOne("cn.tekin.mybatis.po.User.findUserById", id);
+  sqlSession.insert("cn.tekin.mybatis.po.User.insertUser", user);
+
+
+
+---
 
 ##使用方法
 

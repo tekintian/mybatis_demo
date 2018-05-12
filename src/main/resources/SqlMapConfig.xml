@@ -3,6 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <!-- mappers 告诉了Mybatis去哪里找持久化类的映射文件 -->
+    <settings>
+        <!-- 要使延迟加载生效必须配置下面两个属性 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+
     <!-- 和spring整合后 environments配置将废除-->
     <environments default="development">
         <environment id="development">
@@ -21,7 +28,10 @@
 
     <!-- 加载映射文件-->
     <mappers>
-        <mapper resource="sqlmap/User.xml"/>
+        <!--sqlmap-->
+        <mapper resource="sqlmap/user.xml"/>
+        <!--mapper代理方式-->
+        <mapper resource="mapper/userMapper.xml"/>
     </mappers>
 
 </configuration>
