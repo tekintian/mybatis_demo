@@ -1,59 +1,26 @@
-# Mybatis Demo v0.7.0
+# Mybatis Demo Learning Project
+
+本项目为学习mybatis基础的实例演示项目，从mybatis最基础的的演示到订单用户的多表复杂应用全部概括， 每个知识点都是一个完整的演示案例，详细查看 [Release页面>>](https://github.com/tekintian/mybatis_demo/releases)
 
 ![Mybatis Learning Demo](ScreenShot.jpg) 
 
 ---
 
-- 订单商品数据模型查询
 
-# Mybatis之 动态sql
-mybatis核心,对sql语句进行灵活操作，通过表达式进行判断，对sql进行灵活拼接、组装。
+## 版本列表
 
-- if判断
+每个版本都是一个知识点的 完整演示
 
-- sql片段
- 
- 将上边实现的动态sql判断代码块抽取出来，组成一个sql片段。其它的statement中就可以引用sql片段。
- 
-- foreach标签
+https://github.com/tekintian/mybatis_demo/tree/v0.1
+https://github.com/tekintian/mybatis_demo/tree/v0.1.1
+https://github.com/tekintian/mybatis_demo/tree/v0.2.0
+https://github.com/tekintian/mybatis_demo/tree/v0.3.0
+https://github.com/tekintian/mybatis_demo/tree/v0.4.0
+https://github.com/tekintian/mybatis_demo/tree/v0.5.0
+https://github.com/tekintian/mybatis_demo/tree/v0.5.1
+https://github.com/tekintian/mybatis_demo/tree/v0.6.0
+https://github.com/tekintian/mybatis_demo/tree/v0.7.0
 
-    向sql传递数组或List，mybatis使用foreach解析
-    
-
-##说明
-
-
-- 输出简单类型
-
-```xml
-
-<if test="ids!=null">
-    <!-- 使用 foreach遍历传入ids
-    collection：指定输入 对象中集合属性
-    item：每个遍历生成对象中
-    open：开始遍历时拼接的串
-    close：结束遍历时拼接的串
-    separator：遍历的两个对象中需要拼接的串
-     -->
-    <!-- 使用实现下边的sql拼接：
-     AND (id=1 OR id=10 OR id=16)
-     -->
-    <foreach collection="ids" item="user_id" open="AND (" close=")" separator="or">
-        <!-- 每个遍历需要拼接的串 -->
-        id=#{user_id}
-    </foreach>
-    
-    <!-- 实现  “ and id IN(1,10,16)”拼接 -->
-    <!-- <foreach collection="ids" item="user_id" open="and id IN(" close=")" separator=",">
-        每个遍历需要拼接的串
-        #{user_id}
-    </foreach> -->
-
-</if>
-
-```
-
-   
 
 ---
 
