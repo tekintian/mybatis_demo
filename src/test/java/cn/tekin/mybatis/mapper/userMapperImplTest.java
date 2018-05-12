@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class userMapperImplTest {
@@ -70,10 +71,20 @@ public class userMapperImplTest {
         UserCustom userCustom = new UserCustom();
         //由于这里使用动态sql，如果不设置某个值，条件不会拼接在sql中
         userCustom.setSex("男");
-        userCustom.setUsername("小明");
+        userCustom.setUsername("小");
         userCustom.setAddress("昆明");
         userQueryVo.setUserCustom(userCustom);
         //调用userMapper的方法
+
+        //传入多个id
+        List<Integer> ids = new ArrayList<Integer>();
+        ids.add(1);
+        ids.add(25);
+        ids.add(28);
+        //将ids通过userQueryVo传入statement中
+        userQueryVo.setIds(ids);
+
+
 
         List<UserCustom> list = userMapper.findUserList(userQueryVo);
 

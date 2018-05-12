@@ -1,89 +1,57 @@
-# Mybatis Demo v0.5.1
+# Mybatis Demo v0.5.2
 
-mybatis中使用resultMap完成高级输出结果映射。(一对多，多对多)
-
-resultMap使用方法
-如果查询出来的列名和pojo的属性名不一致，通过定义一个resultMap对列名和pojo属性名之间作一个映射关系。
-
-1.定义resultMap
-
-2.使用resultMap作为statement的输出映射类型
+动态sql； 
 
 ---
 
-# Mybatis之 输出映射
+# Mybatis之 动态sql
+mybatis核心,对sql语句进行灵活操作，通过表达式进行判断，对sql进行灵活拼接、组装。
 
-    输出映射有两种方式
+- if判断
+
+- sql片段
+ 
+ 将上边实现的动态sql判断代码块抽取出来，组成一个sql片段。其它的statement中就可以引用sql片段。
+ 
+- foreach标签
+
+    向sql传递数组或List，mybatis使用foreach解析
     
-    resultType
-    resultMap
-    resultType
-    使用resultType进行输出映射，只有查询出来的列名和pojo中的属性名一致，该列才可以映射成功。
-    如果查询出来的列名和pojo中的属性名全部不一致，没有创建pojo对象。
-    只要查询出来的列名和pojo中的属性有一个一致，就会创建pojo对象。
-    
+
 ##说明
 
 
 - 输出简单类型
 
-```java
-//用户信息综合查询总数
-	@Test
-	public void testFindUserCount() throws Exception {
+```xml
 
-		SqlSession sqlSession = sqlSessionFactory.openSession();
+<if test="ids!=null">
+    <!-- 使用 foreach遍历传入ids
+    collection：指定输入 对象中集合属性
+    item：每个遍历生成对象中
+    open：开始遍历时拼接的串
+    close：结束遍历时拼接的串
+    separator：遍历的两个对象中需要拼接的串
+     -->
+    <!-- 使用实现下边的sql拼接：
+     AND (id=1 OR id=10 OR id=16)
+     -->
+    <foreach collection="ids" item="user_id" open="AND (" close=")" separator="or">
+        <!-- 每个遍历需要拼接的串 -->
+        id=#{user_id}
+    </foreach>
+    
+    <!-- 实现  “ and id IN(1,10,16)”拼接 -->
+    <!-- <foreach collection="ids" item="user_id" open="and id IN(" close=")" separator=",">
+        每个遍历需要拼接的串
+        #{user_id}
+    </foreach> -->
 
-		//创建UserMapper对象，mybatis自动生成mapper代理对象
-		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+</if>
 
-		//创建包装对象，设置查询条件
-		UserQueryVo userQueryVo = new UserQueryVo();
-		UserCustom userCustom = new UserCustom();
-		//由于这里使用动态sql，如果不设置某个值，条件不会拼接在sql中
-		userCustom.setSex("女");
-		userCustom.setUsername("小");
-		userQueryVo.setUserCustom(userCustom);
-		//调用userMapper的方法
-
-		int count = userMapper.findUserCount(userQueryVo);
-
-		System.out.println(count);
-
-
-	}
 ```
 
-    查询出来的结果集只有一行且一列，可以使用简单类型进行输出映射。
-
-
-- 输出pojo对象和pojo列表
-    不管是输出的pojo单个对象还是一个列表（list中包括pojo），在mapper.xml中resultType指定的类型是一样的。
-    
-    在mapper.java指定的方法返回值类型不一样：
-    
-    输出单个pojo对象，方法返回值是单个对象类型
-    //根据id查询用户信息
-    public User findUserById(int id) throws Exception;
-    输出pojo对象list，方法返回值是List
-    //根据用户名列查询用户列表
-    public List<User> findUserByName(String name) throws Exception;
-    生成的动态代理对象中是根据mapper方法的返回值类型确定是调用selectOne(返回单个对象调用)还是selectList （返回集合对象调用 ）.
-    
-    resultMap
-    mybatis中使用resultMap完成高级输出结果映射。(一对多，多对多)
-    
-    resultMap使用方法
-    如果查询出来的列名和pojo的属性名不一致，通过定义一个resultMap对列名和pojo属性名之间作一个映射关系。
-    
-    1.定义resultMap
-    
-    2.使用resultMap作为statement的输出映射类型
-
-    使用resultType进行输出映射，只有查询出来的列名和pojo中的属性名一致，该列才可以映射成功。
-    
-    如果查询出来的列名和pojo的属性名不一致，通过定义一个resultMap对列名和pojo属性名之间作一个映射关系。
-
+   
 
 ---
 
