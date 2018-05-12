@@ -5,7 +5,7 @@
 <!-- namespace 命名空间，作用就是对sql进行分类化管理,理解为sql隔离
  注意：使用mapper代理方法开发，namespace有特殊重要的作用
  -->
-<mapper namespace="test.mybatis.po.user">
+<mapper namespace="cn.tekin.mybatis.po.User">
     <!-- 在映射文件中配置很多sql语句 -->
     <!--需求:通过id查询用户表的记录 -->
     <!-- 通过select执行数据库查询

@@ -18,6 +18,7 @@ import java.util.Map;
 
 public class UserTest {
     //把测试用到的对象先在这里声明了，减少冗余代码
+    // SqlSession最佳应用场合在方法体内，定义成局部变量使用, 此处仅为介绍冗余代码而用，因为每次测试 Junit都会关闭或者开启 SqlSession
     InputStream inputStream=null;
     SqlSessionFactory sqlSessionFactory=null;
     SqlSession sqlSession=null;
@@ -61,7 +62,7 @@ public class UserTest {
         // 第二个参数：指定和映射文件中所匹配的parameterType类型的参数
         // sqlSession.selectOne结果 是与映射文件中所匹配的resultType类型的对象
         // selectOne查询出一条记录
-        User user = sqlSession.selectOne("test.mybatis.po.user.findUserById", 1);
+        User user = sqlSession.selectOne("cn.tekin.mybatis.po.User.findUserById", 1);
 
         System.out.println("User对象："+user);
         System.out.println("用户ID:"+ user.getId()+" 用户名："+user.getUsername() +" 用户地址："+user.getAddress());
@@ -83,7 +84,7 @@ public class UserTest {
 //        SqlSession sqlSession=sqlSessionFactory.openSession();
 
         //list 中的 user 和映射文件中的 resultType所指定的类型必须一致
-        List<User> list =sqlSession.selectList("test.mybatis.po.user.findUserByName","王五");
+        List<User> list =sqlSession.selectList("cn.tekin.mybatis.po.User.findUserByName","王五");
 
         //控制台输出
         System.out.println("list等于："+list);
@@ -108,7 +109,7 @@ public class UserTest {
         map.put("id",1);//OR搜索
 
         //根据关键词获取数据列表
-        List<User> list=sqlSession.selectList("test.mybatis.po.user.findUserByKeyword",map);
+        List<User> list=sqlSession.selectList("cn.tekin.mybatis.po.User.findUserByKeyword",map);
 
         System.out.println(list);
         //关闭资源
@@ -126,7 +127,7 @@ public class UserTest {
         user.setSex("女");
         user.setAddress("云南昆明市五华区");
 
-        sqlSession.insert("test.mybatis.po.user.insertUser", user);
+        sqlSession.insert("cn.tekin.mybatis.po.User.insertUser", user);
 
         // 提交事务
         sqlSession.commit();
@@ -140,7 +141,7 @@ public class UserTest {
     @Test
     public void deleteUserTest() throws IOException {
         // 传入id删除 用户
-        sqlSession.delete("test.mybatis.po.user.deleteUser", 29);
+        sqlSession.delete("cn.tekin.mybatis.po.User.deleteUser", 29);
         // 提交事务
         sqlSession.commit();
     }
@@ -162,7 +163,7 @@ public class UserTest {
         user.setSex("男");
         user.setAddress("云南曲靖");
 
-        sqlSession.update("test.mybatis.po.user.updateUser", user);
+        sqlSession.update("cn.tekin.mybatis.po.User.updateUser", user);
 
         // 提交事务
         sqlSession.commit();

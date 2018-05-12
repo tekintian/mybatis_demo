@@ -1,14 +1,23 @@
-#Mybatis Demo with Gradle
+# Mybatis Demo v0.2.0
 
-    增加Junit4单元测试方法
-    Mybatis 用户增删改查 数据库表映射与操作语句完成
+---
 
+# 原始dao开发 
+
+## 原始dao开发存在的问题
+
+    1.dao接口实现类方法中存在大量模板方法，设想能否将这些代码提取出来，大大减轻程序员的工作量。
+    
+    2.调用sqlsession方法时将statement的id硬编码了
+    
+    3.调用sqlsession方法时传入的变量，由于sqlsession方法使用泛型，即使变量类型传入错误，在编译阶段也不报错，不利于程序员开发。
+    
 
 ##使用方法
+
 - 数据库用户名创建与授权
-数据库名称：mybatis_demo
-用户名：mybatis
-密码：888888
+
+    数据库名称：mybatis_demo   用户名：mybatis   密码：888888
 
 ```sql
 
