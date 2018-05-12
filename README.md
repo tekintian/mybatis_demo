@@ -67,5 +67,74 @@ GRANT Alter, Alter Routine, Create, Create Routine, Create Temporary Tables, Cre
 jdbc:mysql://localhost:3306/mybatis_demo?characterEncoding=utf-8&amp;useSSL=false
 ```
 
+## new Date() Cannot resolve constructor 'Date()'解决方法
+    此问题主要是要 解决java.util.Date转java.sql.Date,在对于java.sql.Date、Time、Timestamp构造器都存在着对应的有参构造器Date(long time)、Time(long time)、Timestamp(long time)。
+
+```java
+//将java.util.Date 获取的时间转换为 java.sql.Date
+java.sql.Date sqlDate=new java.sql.Date(new java.util.Date().getTime());
+
+```
+
+# Junit4使用
+- @Before：
+    使用了该元数据的方法在每个测试方法执行之前都要执行一次。
+
+- @After：
+    使用了该元数据的方法在每个测试方法执行之后要执行一次。
+
+    注意：@Before和@After标示的方法只能各有一个。这个相当于取代了JUnit以前版本中的setUp和tearDown方法，当然你还可以继续叫这个名字，不过JUnit不会霸道的要求你这么做了。
+
+- @Test(expected=*.class)
+    在JUnit4.0之前，对错误的测试，我们只能通过fail来产生一个错误，并在try块里面assertTrue（true）来测试。现在，通过@Test元数据中的expected属性。expected属性的值是一个异常的类型
+
+- @Test(timeout=xxx):
+    该元数据传入了一个时间（毫秒）给测试方法，
+    如果测试方法在制定的时间之内没有运行完，则测试也失败。
+
+- @ignore：
+    该元数据标记的测试方法在测试中会被忽略。当测试的方法还没有实现，或者测试的方法已经过时，或者在某种条件下才能测试该方法（比如需要一个数据库联接，而在本地测试的时候，数据库并没有连接），那么使用该标签来标示这个方法。同时，你可以为该标签传递一个String的参数，来表明为什么会忽略这个测试方法。比如：- @lgnore(“该方法还没有实现”)，在执行的时候，仅会报告该方法没有实现，而不会运行测试方法。
+
+
+## JUnit4注解解释
+
+1. @Test : 测试方法，测试程序会运行的方法，后边可以跟参数代表不同的测试，如(expected=XXException.class) 异常测试，(timeout=xxx)超时测试
+2. @Ignore : 被忽略的测试方法
+3. @Before: 每一个测试方法之前运行
+4. @After : 每一个测试方法之后运行
+5. @BeforeClass: 所有测试开始之前运行
+6. @AfterClass: 所有测试结束之后运行
+
+fail方法是指测试失败
+
+assertEquals测试2个参数是否相等，具体参考相应API
+
+
+## Date相互转换 
+1. 使用getTime()函数
+这两个类都提供了getTime()函数，用于返回对应的毫秒数（long类型）。利用这个函数可以实现转换：
+    java.util.Date utilDate = newjava.util.Date(sqlDate.getTime());   // sql -> util
+    java.sql.Date sqlDate = newjava.sql.Date(utilDate.getTime());   // util -> sql
+
+2. 使用SimpleDateFormat类实现转换
+SimpleDateFormat 是一个以国别敏感的方式格式化和分析数据的具体类。 它允许格式化 (date-> text)、语法分析 (text -> date)和标准化。
+SimpleDateFormat dateFormat = new SimpleDateFormate("yyyy-MM-ddHH:mm:ss");
+java.util.Date utilDate = dateFormat.parse(sqlDate.toString());
+
+3. 直接转换
+由于java.sql.Date是从java.util.Date中继承过来的，所以可以直接用：
+utilDate = sqlDate;
+
+4. 另类获得日期的方法：
+SimpleDateFormat sy=new SimpleDateFormat("yyyy");
+SimpleDateFormat sm=new SimpleDateFormat("MM");
+SimpleDateFormat sd=new SimpleDateFormat("dd");
+String syear=sy.format(date);
+String smon=sm.format(date);
+String sday=sd.format(date);
+
+ps： java.util.Date类中的getYear()要加上1900才可得到实际值，getMonth()则要加上1      
+
+
 
 
