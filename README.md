@@ -1,4 +1,6 @@
-# Mybatis Demo v0.5.0
+# Mybatis Demo v0.5.1
+
+输出pojo对象和pojo列表
 
 ---
 

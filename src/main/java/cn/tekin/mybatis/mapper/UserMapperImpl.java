@@ -7,9 +7,12 @@ import cn.tekin.mybatis.po.UserQueryVo;
 import java.util.List;
 
 public interface UserMapperImpl {
+
+    // 输出单个pojo对象，方法返回值是单个对象类型
     //根据id查询用户信息
     public User findUserById(int id) throws Exception;
 
+    //输出pojo对象list，方法返回值是List
     //根据用户名列查询用户列表
     public List<User> findUserByName(String name) throws Exception;
 
