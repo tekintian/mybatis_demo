@@ -22,6 +22,9 @@ public interface UserMapperImpl {
     //更新用户
     public void updateUser(User user)throws Exception;
 
-    //用户信息综合查询
+    //输入映射  -- 用户信息综合查询
     public List<UserCustom> findUserList(UserQueryVo userQueryVo) throws Exception;
+
+    // 输出简单类型演示 -- 用户信息查询数量
+    public Integer findUserCount(UserQueryVo userQueryVo) throws Exception;
 }

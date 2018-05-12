@@ -93,4 +93,13 @@
         SELECT * FROM user WHERE user.sex=#{userCustom.sex} AND user.username LIKE '%${userCustom.username}%' AND user.address LIKE '%${userCustom.address}%'
     </select>
 
+    <!-- 输出简单类型演示
+       用户信息综合查询总数
+        parameterType：指定输入类型和findUserList一样
+        resultType：输出结果类型
+    -->
+    <select id="findUserCount" parameterType="cn.tekin.mybatis.po.UserQueryVo" resultType="int">
+        SELECT count(*) FROM user WHERE user.sex=#{userCustom.sex} AND user.username LIKE '%${userCustom.username}%'
+    </select>
+
 </mapper>

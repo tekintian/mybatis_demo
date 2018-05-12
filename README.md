@@ -1,33 +1,80 @@
-# Mybatis Demo v0.4.0
+# Mybatis Demo v0.5.0
 
 ---
 
-# Mybatis之 输入映射 
+# Mybatis之 输出映射
 
-传递pojo的包装对象
-
+    输出映射有两种方式
+    
+    resultType
+    resultMap
+    resultType
+    使用resultType进行输出映射，只有查询出来的列名和pojo中的属性名一致，该列才可以映射成功。
+    如果查询出来的列名和pojo中的属性名全部不一致，没有创建pojo对象。
+    只要查询出来的列名和pojo中的属性有一个一致，就会创建pojo对象。
+    
 ##说明
 
-    通过parameterType指定输入参数的类型，类型可以是
-    
-    简单类型
-    hashmap
-    pojo的包装类型
-    
-在UserMapper.xml中定义用户信息综合查询（查询条件复杂，通过高级查询进行复杂关联查询）。
 
-```xml
- <!-- 用户信息综合查询
-        #{userCustom.sex}:取出pojo包装对象中性别值
-        ${userCustom.username}：取出pojo包装对象中用户名称
-        注意不要将#{userCustom.sex}中的userCustom写成UserCustom,前者指属性名(由于使用IDE提示自动补全，所以只是把类型名首字母小写了)，后者指类型名，这里是UserQueryVo类中的userCustom属性，是属性名。写错会报异常：
-     -->
-    <select id="findUserList" parameterType="cn.tekin.mybatis.po.UserQueryVo"
-            resultType="cn.tekin.mybatis.po.UserCustom">
-        SELECT * FROM user WHERE user.sex=#{userCustom.sex} AND user.username LIKE '%${userCustom.username}%' AND user.address LIKE '%${userCustom.address}%'
-    </select>
- 
+- 输出简单类型
+
+```java
+//用户信息综合查询总数
+	@Test
+	public void testFindUserCount() throws Exception {
+
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+
+		//创建UserMapper对象，mybatis自动生成mapper代理对象
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
+		//创建包装对象，设置查询条件
+		UserQueryVo userQueryVo = new UserQueryVo();
+		UserCustom userCustom = new UserCustom();
+		//由于这里使用动态sql，如果不设置某个值，条件不会拼接在sql中
+		userCustom.setSex("女");
+		userCustom.setUsername("小");
+		userQueryVo.setUserCustom(userCustom);
+		//调用userMapper的方法
+
+		int count = userMapper.findUserCount(userQueryVo);
+
+		System.out.println(count);
+
+
+	}
 ```
+
+    查询出来的结果集只有一行且一列，可以使用简单类型进行输出映射。
+
+
+- 输出pojo对象和pojo列表
+    不管是输出的pojo单个对象还是一个列表（list中包括pojo），在mapper.xml中resultType指定的类型是一样的。
+    
+    在mapper.java指定的方法返回值类型不一样：
+    
+    输出单个pojo对象，方法返回值是单个对象类型
+    //根据id查询用户信息
+    public User findUserById(int id) throws Exception;
+    输出pojo对象list，方法返回值是List
+    //根据用户名列查询用户列表
+    public List<User> findUserByName(String name) throws Exception;
+    生成的动态代理对象中是根据mapper方法的返回值类型确定是调用selectOne(返回单个对象调用)还是selectList （返回集合对象调用 ）.
+    
+    resultMap
+    mybatis中使用resultMap完成高级输出结果映射。(一对多，多对多)
+    
+    resultMap使用方法
+    如果查询出来的列名和pojo的属性名不一致，通过定义一个resultMap对列名和pojo属性名之间作一个映射关系。
+    
+    1.定义resultMap
+    
+    2.使用resultMap作为statement的输出映射类型
+
+    使用resultType进行输出映射，只有查询出来的列名和pojo中的属性名一致，该列才可以映射成功。
+    
+    如果查询出来的列名和pojo的属性名不一致，通过定义一个resultMap对列名和pojo属性名之间作一个映射关系。
+
 
 ---
 
@@ -188,5 +235,42 @@ String sday=sd.format(date);
 ps： java.util.Date类中的getYear()要加上1900才可得到实际值，getMonth()则要加上1      
 
 
+# mybatis 的几个简单区别
 
+1、#{ } 和 ${ } 的区别
+```text
+#{ }表示一个占位符号，通过#{ }可以实现 preparedStatement 向占位符中设置值，自动进行java 类型和 jdbc 类型转换，#{ } 可以有效防止sql注入。#{ } 可以接收简单类型值或 pojo 属性值（通过 OGNL 读取对象中的值，属性.属性.属性..方式获取对象属性值）。 如果 parameterType 传输单个简单类型值，#{ } 括号中可以是 value 或其它名称。
 
+${ } 表示拼接 sql 串，通过${ }可以将 parameterType 传入的内容拼接在 sql 中且不进行 jdbc 类型转换， ${ }可以接收简单类型值或 pojo 属性值（（通过 OGNL 读取对象中的值，属性.属性.属性..方式获取对象属性值）），如果 parameterType 传输单个简单类型值，${}括号中只能是 value。
+
+```
+
+2、parameterType 和 resultType 区别
+
+    parameterType：指定输入参数类型，mybatis 通过 ognl 从输入对象中获取参数值拼接在 sql 中。
+
+    resultType：指定输出结果类型，mybatis 将 sql 查询结果的一行记录数据映射为 resultType 指定类型的对象。
+
+3、selectOne 和 selectList 区别
+
+    selectOne 查询一条记录来进行映射，如果使用selectOne查询多条记录则抛出异常：
+    
+    org.apache.ibatis.exceptions.TooManyResultsException: Expected one result (or null) to bereturned by selectOne(), but found: 3 at
+    
+    selectList 可以查询一条或多条记录来进行映射。
+
+4、注意:
+
+    selectKey将主键返回，需要再返回
+    
+    添加selectKey实现将主键返回
+    
+    keyProperty:返回的主键存储在pojo中的哪个属性
+    
+    order：selectKey的执行顺序，是相对与insert语句来说，由于mysql的自增原理执行完insert语句之后才将主键生成，所以这里selectKey的执行顺序为after
+    
+    resultType:返回的主键是什么类型
+    
+    LAST_INSERT_ID():是mysql的函数，返回auto_increment自增列新记录id值。
+
+---
