@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 和spring整合后 environments配置将废除-->
+    <environments default="development">
+        <environment id="development">
+            <!-- 使用jdbc事务管理，事务控制由mybatis-->
+            <transactionManager type="JDBC" />
+            <!-- characterEncoding=utf-8 设置与数据库通讯所使用的编码； useSSL=false 高版本的MYSQL必须添加，否则无法连接，注意连接符 & 需要使用实体模式，即：&amp;-->
+            <!-- 数据库连接池,由mybatis管理: -->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver" />
+                <property name="url" value="jdbc:mysql://localhost:3357/mybatis_demo?characterEncoding=utf-8&amp;useSSL=false" />
+                <property name="username" value="mybatis" />
+                <property name="password" value="888888" />
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 加载映射文件-->
+    <mappers>
+        <mapper resource="sqlmap/User.xml"/>
+    </mappers>
+
+</configuration>
