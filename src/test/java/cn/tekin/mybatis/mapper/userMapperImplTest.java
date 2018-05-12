@@ -77,6 +77,9 @@ public class userMapperImplTest {
 
         List<UserCustom> list = userMapper.findUserList(userQueryVo);
 
+        //userQueryVo设为null,则userCustom为null
+//        List<UserCustom> list = userMapper.findUserList(null);
+
         System.out.println(list);
 
     }
@@ -111,12 +114,10 @@ public class userMapperImplTest {
         UserMapperImpl userMapper = sqlSession.getMapper(UserMapperImpl.class);
 
         //调用userMapper的方法
-        User user = userMapper.findUserByIdResultMap(1);
+        User user = userMapper.findUserByIdResultMap(28);
 
         System.out.println(user);
 
     }
-
-
 
 }
