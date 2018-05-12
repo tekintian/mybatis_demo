@@ -1,6 +1,11 @@
 #Mybatis Demo with Gradle
 
-#数据库用户名创建与授权
+    增加Junit4单元测试方法
+    Mybatis 用户增删改查 数据库表映射与操作语句完成
+
+
+##使用方法
+- 数据库用户名创建与授权
 数据库名称：mybatis_demo
 用户名：mybatis
 密码：888888
@@ -43,7 +48,7 @@ CREATE USER `mybatis`@`localhost` IDENTIFIED BY '888888';
 GRANT Alter, Alter Routine, Create, Create Routine, Create Temporary Tables, Create View, Delete, Drop, Event, Execute, Grant Option, Index, Insert, Lock Tables, References, Select, Show View, Trigger, Update ON `mybatis\_demo`.* TO `mybatis`@`localhost`;
 ```
 ---
-#mybatis数据库连接参数配置注意事项
+## mybatis数据库连接参数配置注意事项
 
 - characterEncoding=utf-8 设置与数据库通讯所使用的编码；
 - useSSL=false 
