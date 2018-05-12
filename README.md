@@ -1,8 +1,10 @@
-# Mybatis Demo v0.6.0
+# Mybatis Demo v0.7.0
 
-动态sql； 
+![Mybatis Learning Demo](ScreenShot.jpg) 
 
 ---
+
+- 订单商品数据模型查询
 
 # Mybatis之 动态sql
 mybatis核心,对sql语句进行灵活操作，通过表达式进行判断，对sql进行灵活拼接、组装。

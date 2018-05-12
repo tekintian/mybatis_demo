@@ -13,6 +13,8 @@
         <!-- 要使延迟加载生效必须配置下面两个属性 -->
         <setting name="lazyLoadingEnabled" value="true"/>
         <setting name="aggressiveLazyLoading" value="false"/>
+        <!--开启二级缓存-->
+        <setting name="cacheEnabled" value="true"/>
     </settings>
     <!-- 别名定义 -->
     <typeAliases>
@@ -50,6 +52,7 @@
         <mapper resource="sqlmap/user.xml"/>
         <!--mapper代理方式-->
         <mapper resource="mapper/userMapper.xml"/>
+        <mapper resource="mapper/OrdersMapperCustom.xml"/>
     </mappers>
 
 </configuration>

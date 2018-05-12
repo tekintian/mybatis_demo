@@ -36,8 +36,9 @@
     <!-- 添加用户
         parameterType：指定输入 参数类型是pojo（包括 用户信息）
         #{}中指定pojo的属性名，接收到pojo对象的属性值，mybatis通过OGNL获取对象的属性值
+        总结：一般下执行完commit操作都需要刷新缓存，flushCache=true表示刷新缓存，这样可以避免数据库脏读。
         -->
-    <insert id="insertUser" parameterType="cn.tekin.mybatis.po.User">
+    <insert id="insertUser" parameterType="cn.tekin.mybatis.po.User" flushCache="true">
         <!--
          将插入数据的主键返回，返回到user对象中
 
