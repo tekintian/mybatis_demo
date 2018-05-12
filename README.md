@@ -1,6 +1,13 @@
 # Mybatis Demo v0.5.1
 
-输出pojo对象和pojo列表
+mybatis中使用resultMap完成高级输出结果映射。(一对多，多对多)
+
+resultMap使用方法
+如果查询出来的列名和pojo的属性名不一致，通过定义一个resultMap对列名和pojo属性名之间作一个映射关系。
+
+1.定义resultMap
+
+2.使用resultMap作为statement的输出映射类型
 
 ---
 

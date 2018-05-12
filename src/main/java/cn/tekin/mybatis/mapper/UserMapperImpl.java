@@ -30,4 +30,7 @@ public interface UserMapperImpl {
 
     // 输出简单类型演示 -- 用户信息查询数量
     public Integer findUserCount(UserQueryVo userQueryVo) throws Exception;
+
+    //根据id查询用户信息，使用resultMap输出
+    public User findUserByIdResultMap(int id) throws Exception;
 }

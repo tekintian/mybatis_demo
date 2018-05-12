@@ -103,4 +103,20 @@ public class userMapperImplTest {
 
     }
 
+    //.使用resultMap作为statement的输出映射类型 演示
+    @Test
+    public void testFindUserByIdResultMap() throws Exception {
+
+        //创建UserMapper对象，mybatis自动生成mapper代理对象
+        UserMapperImpl userMapper = sqlSession.getMapper(UserMapperImpl.class);
+
+        //调用userMapper的方法
+        User user = userMapper.findUserByIdResultMap(1);
+
+        System.out.println(user);
+
+    }
+
+
+
 }
