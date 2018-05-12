@@ -1,4 +1,4 @@
-# Mybatis Demo v0.6.1
+# Mybatis Demo v0.6.0
 
 动态sql； 
 
