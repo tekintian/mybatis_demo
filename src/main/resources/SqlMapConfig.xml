@@ -3,13 +3,31 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <properties resource="db.properties">
+        <!--properties中还可以配置一些属性名和属性值  -->
+        <!-- <property name="jdbc.driver" value=""/> -->
+    </properties>
     <!-- mappers 告诉了Mybatis去哪里找持久化类的映射文件 -->
+    <!--settings info http://www.mybatis.org/mybatis-3/configuration.html#settings-->
     <settings>
         <!-- 要使延迟加载生效必须配置下面两个属性 -->
         <setting name="lazyLoadingEnabled" value="true"/>
         <setting name="aggressiveLazyLoading" value="false"/>
     </settings>
+    <!-- 别名定义 -->
+    <typeAliases>
 
+        <!-- 针对单个别名定义
+        type：类型的路径
+        alias：别名
+         -->
+        <!-- <typeAlias type="cn.itcast.mybatis.po.User" alias="user"/> -->
+        <!-- 批量别名定义
+        指定包名，mybatis自动扫描包中的po类，自动定义别名，别名就是类名（首字母大写或小写都可以）
+        -->
+        <package name="cn.tekin.mybatis.po"/>
+
+    </typeAliases>
     <!-- 和spring整合后 environments配置将废除-->
     <environments default="development">
         <environment id="development">
@@ -18,10 +36,10 @@
             <!-- characterEncoding=utf-8 设置与数据库通讯所使用的编码； useSSL=false 高版本的MYSQL必须添加，否则无法连接，注意连接符 & 需要使用实体模式，即：&amp;-->
             <!-- 数据库连接池,由mybatis管理: -->
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver" />
-                <property name="url" value="jdbc:mysql://localhost:3357/mybatis_demo?characterEncoding=utf-8&amp;useSSL=false" />
-                <property name="username" value="mybatis" />
-                <property name="password" value="888888" />
+                <property name="driver" value="${jdbc.driver}" />
+                <property name="url" value="${jdbc.url}" />
+                <property name="username" value="${jdbc.username}" />
+                <property name="password" value="${jdbc.password}" />
             </dataSource>
         </environment>
     </environments>

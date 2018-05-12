@@ -1,36 +1,33 @@
-# Mybatis Demo v0.3.0
+# Mybatis Demo v0.4.0
 
 ---
 
-# Mybatis之mapper代理方法
+# Mybatis之 输入映射 
 
+传递pojo的包装对象
 
-##开发规范
-  在mapper.xml中namespace等于mapper接口地址【 java 接口文件命名规范 xxxImpl】
-  <!--
-   namespace 命名空间，作用就是对sql进行分类化管理,理解为sql隔离
-   注意：使用mapper代理方法开发，namespace有特殊重要的作用,namespace等于mapper接口地址
-   -->
-   
-  <mapper namespace="cn.tekin.mybatis.mapper.UserMapperImpl">
-  
-  mapper.java接口中的方法名和mapper.xml中statement的id一致
-  
-  mapper.java接口中的方法输入参数类型和mapper.xml中statement的parameterType指定的类型一致。
-  
-  mapper.java接口中的方法返回值类型和mapper.xml中statement的resultType指定的类型一致。
-  
-  <select id="findUserById" parameterType="int" resultType="cn.tekin.mybatis.po.User">
-      SELECT * FROM  user  WHERE id=#{value}
-  </select>
-  //根据id查询用户信息
-  public User findUserById(int id) throws Exception;
-  总结：以上开发规范主要是对下边的代码进行统一生成：
-  
-  User user = sqlSession.selectOne("cn.tekin.mybatis.po.User.findUserById", id);
-  sqlSession.insert("cn.tekin.mybatis.po.User.insertUser", user);
+##说明
 
+    通过parameterType指定输入参数的类型，类型可以是
+    
+    简单类型
+    hashmap
+    pojo的包装类型
+    
+在UserMapper.xml中定义用户信息综合查询（查询条件复杂，通过高级查询进行复杂关联查询）。
 
+```xml
+ <!-- 用户信息综合查询
+        #{userCustom.sex}:取出pojo包装对象中性别值
+        ${userCustom.username}：取出pojo包装对象中用户名称
+        注意不要将#{userCustom.sex}中的userCustom写成UserCustom,前者指属性名(由于使用IDE提示自动补全，所以只是把类型名首字母小写了)，后者指类型名，这里是UserQueryVo类中的userCustom属性，是属性名。写错会报异常：
+     -->
+    <select id="findUserList" parameterType="cn.tekin.mybatis.po.UserQueryVo"
+            resultType="cn.tekin.mybatis.po.UserCustom">
+        SELECT * FROM user WHERE user.sex=#{userCustom.sex} AND user.username LIKE '%${userCustom.username}%' AND user.address LIKE '%${userCustom.address}%'
+    </select>
+ 
+```
 
 ---
 
@@ -133,17 +130,37 @@ java.sql.Date sqlDate=new java.sql.Date(new java.util.Date().getTime());
 
 ## JUnit4注解解释
 
-1. @Test : 测试方法，测试程序会运行的方法，后边可以跟参数代表不同的测试，如(expected=XXException.class) 异常测试，(timeout=xxx)超时测试
-2. @Ignore : 被忽略的测试方法
-3. @Before: 每一个测试方法之前运行
-4. @After : 每一个测试方法之后运行
-5. @BeforeClass: 所有测试开始之前运行
-6. @AfterClass: 所有测试结束之后运行
+    1. @Test : 测试方法，测试程序会运行的方法，后边可以跟参数代表不同的测试，如(expected=XXException.class) 异常测试，(timeout=xxx)超时测试
+    2. @Ignore : 被忽略的测试方法
+    3. @Before: 每一个测试方法之前运行
+    4. @After : 每一个测试方法之后运行
+    5. @BeforeClass: 所有测试开始之前运行
+    6. @AfterClass: 所有测试结束之后运行
 
-fail方法是指测试失败
+    fail方法是指测试失败
 
-assertEquals测试2个参数是否相等，具体参考相应API
+    assertEquals测试2个参数是否相等，具体参考相应API
 
+
+## 项目依赖 gradle dependencies
+
+    dependencies {
+        compile group: 'org.ow2.asm', name: 'asm', version: '6.1.1'
+        compile group: 'cglib', name: 'cglib', version: '3.2.6'
+        compile group: 'commons-logging', name: 'commons-logging', version: '1.2'
+        compile group: 'org.javassist', name: 'javassist', version: '3.22.0-GA'
+        compile group: 'log4j', name: 'log4j', version: '1.2.17'
+        compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.0'
+        compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.0'
+    
+        compile group: 'org.mybatis', name: 'mybatis', version: '3.4.6'
+        compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.46'
+        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.8.0-beta2'
+        testCompile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.8.0-beta2'
+    
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+    }
+      
 
 ## Date相互转换 
 1. 使用getTime()函数

@@ -1,6 +1,8 @@
 package cn.tekin.mybatis.mapper;
 
 import cn.tekin.mybatis.po.User;
+import cn.tekin.mybatis.po.UserCustom;
+import cn.tekin.mybatis.po.UserQueryVo;
 
 import java.util.List;
 
@@ -19,4 +21,7 @@ public interface UserMapperImpl {
 
     //更新用户
     public void updateUser(User user)throws Exception;
+
+    //用户信息综合查询
+    public List<UserCustom> findUserList(UserQueryVo userQueryVo) throws Exception;
 }

@@ -1,6 +1,8 @@
 package cn.tekin.mybatis.mapper;
 
 import cn.tekin.mybatis.po.User;
+import cn.tekin.mybatis.po.UserCustom;
+import cn.tekin.mybatis.po.UserQueryVo;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -11,6 +13,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class userMapperImplTest {
     private InputStream inputStream=null;
@@ -53,6 +56,29 @@ public class userMapperImplTest {
         User user=userMapperImpl.findUserById(1);
 
         System.out.println("id="+ user.getId() + " Username="+user.getUsername()+" Address="+ user.getAddress());
+    }
+
+    //用户信息的综合 查询
+    @Test
+    public void testFindUserList() throws Exception {
+
+        //创建UserMapperImpl对象，mybatis自动生成mapper代理对象
+        UserMapperImpl userMapper = sqlSession.getMapper(UserMapperImpl.class);
+
+        //创建包装对象，设置查询条件
+        UserQueryVo userQueryVo = new UserQueryVo();
+        UserCustom userCustom = new UserCustom();
+        //由于这里使用动态sql，如果不设置某个值，条件不会拼接在sql中
+        userCustom.setSex("男");
+        userCustom.setUsername("小明");
+        userCustom.setAddress("昆明");
+        userQueryVo.setUserCustom(userCustom);
+        //调用userMapper的方法
+
+        List<UserCustom> list = userMapper.findUserList(userQueryVo);
+
+        System.out.println(list);
+
     }
 
 }
