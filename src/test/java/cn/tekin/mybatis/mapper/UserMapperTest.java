@@ -16,7 +16,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class userMapperImplTest {
+public class UserMapperTest {
     private InputStream inputStream=null;
     private SqlSessionFactory sqlSessionFactory=null;
     private SqlSession sqlSession=null;
@@ -51,7 +51,7 @@ public class userMapperImplTest {
     public void FindUserById() throws Exception{
 
         //创建UserMapperImpl代理对象
-        UserMapperImpl userMapperImpl=sqlSession.getMapper(UserMapperImpl.class);
+        IUserMapper userMapperImpl=sqlSession.getMapper(IUserMapper.class);
 
         //调用userMapperImpl的方法
         User user=userMapperImpl.findUserById(1);
@@ -64,7 +64,7 @@ public class userMapperImplTest {
     public void testFindUserList() throws Exception {
 
         //创建UserMapperImpl对象，mybatis自动生成mapper代理对象
-        UserMapperImpl userMapper = sqlSession.getMapper(UserMapperImpl.class);
+        IUserMapper userMapper = sqlSession.getMapper(IUserMapper.class);
 
         //创建包装对象，设置查询条件
         UserQueryVo userQueryVo = new UserQueryVo();
@@ -100,7 +100,7 @@ public class userMapperImplTest {
     public void testFindUserCount() throws Exception {
 
         //创建UserMapper对象，mybatis自动生成mapper代理对象
-        UserMapperImpl userMapper = sqlSession.getMapper(UserMapperImpl.class);
+        IUserMapper userMapper = sqlSession.getMapper(IUserMapper.class);
 
         //创建包装对象，设置查询条件
         UserQueryVo userQueryVo = new UserQueryVo();
@@ -122,7 +122,7 @@ public class userMapperImplTest {
     public void testFindUserByIdResultMap() throws Exception {
 
         //创建UserMapper对象，mybatis自动生成mapper代理对象
-        UserMapperImpl userMapper = sqlSession.getMapper(UserMapperImpl.class);
+        IUserMapper userMapper = sqlSession.getMapper(IUserMapper.class);
 
         //调用userMapper的方法
         User user = userMapper.findUserByIdResultMap(28);

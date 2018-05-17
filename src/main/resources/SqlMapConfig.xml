@@ -51,8 +51,17 @@
         <!--sqlmap-->
         <mapper resource="sqlmap/user.xml"/>
         <!--mapper代理方式-->
-        <mapper resource="mapper/userMapper.xml"/>
-        <mapper resource="mapper/OrdersMapperCustom.xml"/>
+        <!--<mapper resource="mapper/userMapper.xml"/>-->
+        <!--<mapper resource="mapper/OrdersMapperCustom.xml"/>-->
+
+        <!-- 批量加载mapper,
+        指定mapper接口的包名，mybatis自动扫描包下边所有mapper接口进行加载
+        遵循一些规范：需要将mapper接口类名和mapper.xml映射文件名称保持一致，且在一个目录中
+        上边规范的前提是：使用的是mapper代理方法
+        <package name="cn.tekin.ssm.mapper"/>
+        -->
+        <package name="cn.tekin.mybatis.mapper"/>
+
     </mappers>
 
 </configuration>

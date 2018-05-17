@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class OrdersMapperCustomImplTest {
+public class IOrdersMapperCustomTest {
     private InputStream inputStream=null;
     private SqlSessionFactory sqlSessionFactory=null;
     private SqlSession sqlSession=null;
@@ -48,10 +48,10 @@ public class OrdersMapperCustomImplTest {
     public void testFindOrdersUserResultMap() throws Exception {
 
         // 创建代理对象
-        OrdersMapperCustomImpl ordersMapperCustom = sqlSession
-                .getMapper(OrdersMapperCustomImpl.class);
+        IOrdersMapperCustom ordersMapperCustom = sqlSession
+                .getMapper(IOrdersMapperCustom.class);
 
-        // 调用maper的方法
+        // 调用mapper的方法
         List<Orders> list = ordersMapperCustom.findOrdersUserResultMap();
 
         System.out.println(list);
@@ -63,7 +63,7 @@ public class OrdersMapperCustomImplTest {
     @Test
     public void testFindOrdersUserLazyLoading() throws Exception {
 
-        OrdersMapperCustomImpl ordersMapperCustom = sqlSession.getMapper(OrdersMapperCustomImpl.class);
+        IOrdersMapperCustom ordersMapperCustom = sqlSession.getMapper(IOrdersMapperCustom.class);
         // 查询订单信息（单表）
         List<Orders> list = ordersMapperCustom.findOrdersUserLazyLoading();
 
@@ -79,7 +79,7 @@ public class OrdersMapperCustomImplTest {
     @Test
     public void testCache1() throws Exception {
 //        SqlSession sqlSession = sqlSessionFactory.openSession();// 创建代理对象
-        UserMapperImpl userMapper = sqlSession.getMapper(UserMapperImpl.class);
+        IUserMapper userMapper = sqlSession.getMapper(IUserMapper.class);
 
         // 下边查询使用一个SqlSession
         // 第一次发起请求，查询id为1的用户
@@ -110,7 +110,7 @@ public class OrdersMapperCustomImplTest {
         SqlSession sqlSession2 = sqlSessionFactory.openSession();
         SqlSession sqlSession3 = sqlSessionFactory.openSession();
         // 创建代理对象
-        UserMapperImpl userMapper1 = sqlSession1.getMapper(UserMapperImpl.class);
+        IUserMapper userMapper1 = sqlSession1.getMapper(IUserMapper.class);
         // 第一次发起请求，查询id为1的用户
         User user1 = userMapper1.findUserById(1);
         System.out.println(user1);
@@ -130,7 +130,7 @@ public class OrdersMapperCustomImplTest {
 
 
 
-        UserMapperImpl userMapper2 = sqlSession2.getMapper(UserMapperImpl.class);
+        IUserMapper userMapper2 = sqlSession2.getMapper(IUserMapper.class);
         // 第二次发起请求，查询id为1的用户
         User user2 = userMapper2.findUserById(1);
         System.out.println(user2);

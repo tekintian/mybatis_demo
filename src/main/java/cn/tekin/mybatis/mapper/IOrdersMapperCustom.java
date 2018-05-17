@@ -7,7 +7,7 @@ import cn.tekin.mybatis.po.User;
 import java.util.List;
 
 
-public interface OrdersMapperCustomImpl {
+public interface IOrdersMapperCustom {
     //查询订单关联查询用户信息
     public List<OrdersCustom> findOrdersUser() throws Exception;
 

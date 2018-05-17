@@ -6,7 +6,7 @@ import cn.tekin.mybatis.po.UserQueryVo;
 
 import java.util.List;
 
-public interface UserMapperImpl {
+public interface IUserMapper {
 
     // 输出单个pojo对象，方法返回值是单个对象类型
     //根据id查询用户信息

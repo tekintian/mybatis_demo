@@ -37,7 +37,7 @@ public class UserDaoTest {
     @Test
     public void testFindUserById() throws Exception {
         // 创建UserDao的对象
-        UserDao userDao = new UserDao(sqlSessionFactory);
+        UserDaoImpl userDao = new UserDaoImpl(sqlSessionFactory);
 
         // 调用UserDao的方法
         User user = userDao.findUserById(1);
