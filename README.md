@@ -220,3 +220,42 @@ ${ } 表示拼接 sql 串，通过${ }可以将 parameterType 传入的内容拼
     LAST_INSERT_ID():是mysql的函数，返回auto_increment自增列新记录id值。
 
 ---
+
+
+## MyBatis中的statementType详解
+在mapper文件中可以使用statementType标记使用什么的对象操作SQL语句。 
+statementType：标记操作SQL的对象 
+
+- 取值说明：
+
+1. STATEMENT:直接操作sql，不进行预编译，获取数据：$—Statement 
+2. PREPARED:预处理，参数，进行预编译，获取数据：#—–PreparedStatement:默认 
+3. CALLABLE:执行存储过程————CallableStatement 
+
+其中如果在文件中，取值不同，那么获取参数的方式也不相同
+
+### 示例代码：
+
+    <!-- STATEMENT -->
+    <update id="statement_update" statementType="STATEMENT">
+        update tb_car set name=${name} where id=${id}
+    </update>
+    
+     <!-- PREPARED -->
+    <update id="prepared_update" statementType="PREPARED">
+         update tb_car set name=#{name} where id=#{id}
+    </update>
+    
+    <!-- CALLABLE -->
+    <update id="prepared_update" statementType="PREPARED">
+        call sp_my_update (
+             #{id ,mode=IN},
+             #{name ,mode=IN},
+             #{out_user_id,mode=OUT,jdbcType=NUMERIC}
+           )
+    </update>
+    
+注意：如果只为STATEMENT，那么sql就是直接进行的字符串拼接，这样如果为字符串需要加上引号，如果为PREPARED，是使用的参数替换，也就是索引占位符，我们的#会转换为?再设置对应的参数的值。
+
+
+
