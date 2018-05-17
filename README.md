@@ -251,7 +251,7 @@ statementType：标记操作SQL的对象
         call sp_my_update (
              #{id ,mode=IN},
              #{name ,mode=IN},
-             #{out_user_id,mode=OUT,jdbcType=NUMERIC}
+             #{out_user_id,mode=OUT,jdbcType=INTEGER}
            )
     </update>
     
