@@ -6,7 +6,7 @@
 <!-- namespace命名空间，作用就是对sql进行分类化管理，理解sql隔离
 注意：使用mapper代理方法开发，namespace有特殊重要的作用，namespace等于mapper接口地址
 -->
-<mapper namespace="cn.tekin.mybatis.mapper.OrdersMapperCustomImpl">
+<mapper namespace="cn.tekin.mybatis.mapper.IOrdersMapperCustom">
 
     <!-- 订单查询关联用户的resultMap
 	将整个查询的结果映射到cn.tekin.mybatis.po.Orders中

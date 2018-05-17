@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+ namespace 命名空间，作用就是对sql进行分类化管理,理解为sql隔离
+ 注意：使用mapper代理方法开发，namespace有特殊重要的作用
+ -->
+<mapper namespace="cn.tekin.mybatis.mapper.MyTestMapper">
+
+    <select id="getMaxValueFromColumn" parameterType="Hashmap" resultType="Integer" statementType="PREPARED">
+        SELECT max(#{maxCol}) FROM #{tableName}
+    </select>
+
+    <select id="getMaxValueForColumn" parameterType="hashmap" resultType="integer" statementType="STATEMENT">
+        <![CDATA[
+            select max(${id}) from ${tabName}
+        ]]>
+    </select>
+
+</mapper>
