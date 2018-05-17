@@ -247,12 +247,21 @@ statementType：标记操作SQL的对象
     </update>
     
     <!-- CALLABLE -->
+    
     <update id="prepared_update" statementType="PREPARED">
         call sp_my_update (
              #{id ,mode=IN},
              #{name ,mode=IN},
              #{out_user_id,mode=OUT,jdbcType=INTEGER}
            )
+    </update>
+    
+    <update id="some_procedure" statementType="CALLABLE">
+        {call some_procedure(
+                #{someInParamA, mode=IN},
+                #{someInParamB, jdbcType=ARRAY, mode=IN},
+                #{someOutParamA, javaType=Boolean, jdbcType=NUMERIC, mode=OUT },
+                #{someOutParamB, javaType=Object, jdbcType=ARRAY, jdbcTypeName=SOMEJDBCTYPE, mode=OUT})}
     </update>
     
 注意：如果只为STATEMENT，那么sql就是直接进行的字符串拼接，这样如果为字符串需要加上引号，如果为PREPARED，是使用的参数替换，也就是索引占位符，我们的#会转换为?再设置对应的参数的值。
