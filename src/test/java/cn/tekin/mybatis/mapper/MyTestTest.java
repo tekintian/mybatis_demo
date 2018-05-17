@@ -1,7 +1,6 @@
 package cn.tekin.mybatis.mapper;
 
 import cn.tekin.mybatis.dao.MyTestDao;
-import jdk.internal.util.xml.impl.Input;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;

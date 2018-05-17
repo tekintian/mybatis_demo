@@ -8,8 +8,8 @@
  -->
 <mapper namespace="cn.tekin.mybatis.mapper.MyTestMapper">
 
-    <select id="getMaxValueFromColumn" parameterType="Hashmap" resultType="Integer" statementType="PREPARED">
-        SELECT max(#{maxCol}) FROM #{tableName}
+    <select id="getMaxValueFromColumn" parameterType="Hashmap" resultType="Integer" statementType="STATEMENT">
+        SELECT max(${maxCol}) FROM ${tableName}
     </select>
 
     <select id="getMaxValueForColumn" parameterType="hashmap" resultType="integer" statementType="STATEMENT">
